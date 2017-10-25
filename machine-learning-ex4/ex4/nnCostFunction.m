@@ -79,6 +79,16 @@ end
 %J = 1/m * sum(sum(-log(a3).*Y - log(ones(m,k)-a3).*(ones(m,k)-Y)));
 J = 1/m * sum(diag(-log(a3)'*Y - log(ones(m,k)-a3)'*(ones(m,k)-Y))) + lambda/(2*m)*sum(sum(Theta1(:,2:end).^2)) + lambda/(2*m)*sum(sum( Theta2(:,2:end).^2));
 
+sigma3 = (a3-Y)';
+sigma2 = Theta2(:,2:end)' * sigma3 .* sigmoidGradient(z2');
+
+theta1 = Theta1;
+theta1(:,1) = 0;
+theta2 = Theta2;
+theta2(:,1) = 0;
+
+Theta1_grad = sigma2 * a1 ./ m + lambda/m * theta1;
+Theta2_grad = sigma3 * a2 ./ m + lambda/m * theta2;
 
 
 
